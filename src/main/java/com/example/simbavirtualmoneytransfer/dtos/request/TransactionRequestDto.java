@@ -7,6 +7,8 @@ import lombok.Data;
 @Data
 public class TransactionRequestDto {
 
+    private Long appUserId;
+
     private String sender;
 
     private String receiver;
