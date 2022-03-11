@@ -1,7 +1,10 @@
 package com.example.simbavirtualmoneytransfer.data.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -13,6 +16,9 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Transaction {
 
     @Id
@@ -30,6 +36,8 @@ public class Transaction {
     private double exchangeRate;
 
     private double amount;
+
+    private double accountBalance;
 
     @CreationTimestamp
     @JsonFormat(pattern = "MMMM-dddd-yyyy  HH:mm:ss")

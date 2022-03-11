@@ -42,13 +42,15 @@ public class AppUser {
     @JsonFormat(pattern = "MMMM-dddd-yyyy  HH:mm:ss")
     private LocalDateTime updatedDate;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Transaction> transactions;
+    @OneToOne(cascade = CascadeType.ALL)
+    private final Account myAccount;
 
     private Currency baseCurrency;
 
     public AppUser(){
-        this.baseCurrency.setBalanceAmount(1000);
+        this.myAccount = new Account();
+        this.myAccount.setAccountBalance(1000);
+        this.myAccount.setBaseCurrency(Currency.USD);
     }
 
 }
