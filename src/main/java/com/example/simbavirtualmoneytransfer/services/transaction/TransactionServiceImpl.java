@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -74,8 +75,52 @@ public class TransactionServiceImpl implements TransactionService{
     @Override
     public TransactionResponse receive(TransactionRequestDto requestDto) {
 
+        Optional<AppUser> query = appUserRepository.findById(requestDto.getAppUserId());
 
-        return null;
+        if (query.isEmpty()){
+            throw new UserNotFoundException("AppUser with id " +
+                    requestDto.getAppUserId() + " does not exist");
+        }
+
+        AppUser existingUser = query.get();
+
+        Account myAccount = existingUser.getMyAccount();
+
+        if (requestDto.getAmount() < 1.00 ){
+            throw new IllegalArgumentException("Amount sent cannot be a negative value");
+        }
+
+        double newBalance = myAccount.getAccountBalance() + requestDto.getAmount();
+
+        Transaction transaction = Transaction.builder()
+                .creationDate(LocalDateTime.now())
+                .sender(requestDto.getSender())
+                .receiver(requestDto.getReceiver())
+                .SourceCurrency(requestDto.getSourceCurrency())
+                .targetCurrency(requestDto.getTargetCurrency())
+                .amount(requestDto.getAmount())
+                .id(requestDto.getAppUserId())
+                .accountBalance(newBalance)
+                .build();
+
+        transactionRepository.save(transaction);
+
+        myAccount.addTransaction(transaction);
+        myAccount.setAccountBalance(newBalance);
+
+        accountRepository.save(myAccount);
+
+        return new TransactionResponse(true, requestDto.getAmount()
+                + " was received successfully and new balance is "
+                + myAccount.getAccountBalance() );
+    }
+
+    @Override
+    public List<Transaction> getAllTransaction(Long appUserId) {
+
+        Account account = accountRepository.findAccountByAppUserId(appUserId);
+
+        return account.getTransactionList();
     }
 
 }
