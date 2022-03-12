@@ -17,7 +17,7 @@ public class TransactionRequestDto {
 
     private Currency targetCurrency;
 
-    //private double exchangeRate;
+    private double exchangeRate;
 
     private double amount;
 }
