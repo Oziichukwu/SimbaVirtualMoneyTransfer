@@ -2,7 +2,6 @@ package com.example.simbavirtualmoneytransfer.services.transaction;
 
 import com.example.simbavirtualmoneytransfer.data.models.Account;
 import com.example.simbavirtualmoneytransfer.data.models.AppUser;
-import com.example.simbavirtualmoneytransfer.data.models.Currency;
 import com.example.simbavirtualmoneytransfer.data.models.Transaction;
 import com.example.simbavirtualmoneytransfer.data.repositories.AccountRepository;
 import com.example.simbavirtualmoneytransfer.data.repositories.AppUserRepository;

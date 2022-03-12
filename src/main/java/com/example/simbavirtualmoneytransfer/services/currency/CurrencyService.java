@@ -1,2 +1,6 @@
-package com.example.simbavirtualmoneytransfer.services.currency;public interface CurrencyService {
+package com.example.simbavirtualmoneytransfer.services.currency;
+
+public interface CurrencyService {
+
+    String getCurrencies();
 }
